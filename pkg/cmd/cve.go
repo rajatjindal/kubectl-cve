@@ -84,7 +84,7 @@ func NewCmdCVE(streams genericclioptions.IOStreams) *cobra.Command {
 			return nil
 		},
 	}
-	cmd.Flags().BoolVar(&o.all, "all", false, "Prints information about user, groups and ARN")
+	cmd.Flags().BoolVar(&o.all, "all", true, "Prints information about all supported cve")
 	cmd.Flags().BoolVar(&o.printVersion, "version", false, "prints version of plugin")
 
 	kubeConfigFlags := o.configFlags
@@ -138,7 +138,7 @@ func (o *CVEOptions) Run() error {
 	for k, e := range inventory.GetAllEvaluators() {
 		effected, err := e.Effected(o.f)
 		if err != nil {
-			fmt.Printf("%s - %w\n", k, err)
+			fmt.Printf("%s - %v\n", k, err)
 			continue
 		}
 
