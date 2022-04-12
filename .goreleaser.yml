@@ -1,0 +1,23 @@
+builds:
+- id: kubectl-cve
+  main: ./
+  binary: kubectl-cve
+  env:
+  - CGO_ENABLED=0
+  ldflags:
+  - "-s -w -X github.com/rajatjindal/kubectl-cve/pkg/cmd.Version={{.Version}}"
+  goos:
+  - darwin
+  - linux
+  goarch:
+  - amd64
+  - arm64
+
+archives:
+- builds:
+  - kubectl-cve
+  name_template: "{{ .ProjectName }}_{{ .Tag }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}"
+  wrap_in_directory: false
+  format: tar.gz
+  files:
+  - LICENSE
